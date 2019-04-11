@@ -22,6 +22,7 @@
     </div>
     <script>
       $(".search-box").submit(function() {
+        console.log("click search-box")
         var keyword = $("input[name=keyword]",this).val();
         $(".result").empty();
         $.ajax({
@@ -32,6 +33,7 @@
           },
           dataType: "json",
           success: function(result){
+            console.log("result", result)
             if(result.length){
               for(i in result){
                 var music = result[i];
@@ -43,7 +45,8 @@
                 container.append($("<a>").attr("href", music["previewUrl"]).text("サンプル"));
                 container.append($("<br>"));
                 container.append($("<button>").addClass("like_button").text("いいね").data("id",music["id"]));
-                container.append($("<span>").addClass("like_button").text(music["like"]+"いいね").attr("data-id",music["id"]));
+                container.append($("<span>").addClass("like_label").text(music["like"]+"いいね").attr("data-id",music["id"]));
+                $(".result").append(container);
               }
             }else{
               $(".result").text("検索結果がありません");
@@ -62,6 +65,7 @@
           url: "/musics/" + id + "/like",
           method: "POST",
           success: function(n){
+            console.log("like count", n)
             $(".like_label[data-id=" + id + "]").text(n + "いいね");
           }
         });

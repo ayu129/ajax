@@ -20,6 +20,8 @@ post '/musics/:id/like' do
 end
 
 get '/search' do
+  p params
+  p params[:keyword]
   keyword = params[:keyword]
   uri = URI.parse("https://itunes.apple.com/search")
   uri.query = URI.encode_www_form({ term: keyword, country: "US", media: "music", limit: 10 })
